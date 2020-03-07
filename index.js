@@ -2,6 +2,8 @@
 
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const cTable = require('console.table');
+
 // const add = require(__dirname,"addFunctions.js")
 
 // require('pass.env').config()
@@ -122,7 +124,8 @@ function viewAllRoles(){
         if (err) throw err;
         // Log all results of the SELECT statement
        let rolesArray = res
-       console.log(rolesArray)
+       
+       console.table(rolesArray)
        initialPrompt()
           
       });
@@ -134,7 +137,7 @@ function viewAllEmployees(){
         if (err) throw err;
         // Log all results of the SELECT statement
        let employeeArray = res
-       console.log(employeeArray)
+       console.table(employeeArray)
        initialPrompt()
           
       });
@@ -146,7 +149,7 @@ function viewAllDataDepartments(){
         if (err) throw err;
         // Log all results of the SELECT statement
        let departmentsArray = res
-       console.log(departmentsArray)
+       console.table(departmentsArray)
        initialPrompt()
           
       });
