@@ -19,6 +19,9 @@ VALUES("Sales");
 INSERT INTO department (name)
 VALUES("Marketing");
 
+INSERT INTO department (name)
+VALUES("undefinded");
+
 
 
 CREATE TABLE roles (
@@ -84,6 +87,8 @@ VALUES("Trey", "Best");
 INSERT INTO employee (first_name, last_name)
 VALUES("Symone", "Bryant")
 
+INSERT INTO employee (first_name, last_name)
+VALUES("Jeff", "Test")
 
 
 
