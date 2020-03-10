@@ -30,9 +30,7 @@ connection.connect(function (err) {
 function initialPrompt() {
     inquirer.prompt(initQuestion)
         .then(function (data) {
-
             var action = data.action
-
             // If statement for what is selected 
             if (action === "View All Departments") {
                 viewAllDataDepartments()
@@ -131,7 +129,6 @@ function getRoleForAssignment(managerToBeAssigned) {
                 type: "Input",
                 message: "What is the employees first name",
                 default: "Connor"
-
             },
             {
                 name: "employeeLastName",
@@ -182,7 +179,6 @@ function addEmployee(newEmployeeInfo) {
     var query = connection.query(
         "INSERT INTO employee SET ?",
         {
-
             first_name: fName,
             last_name: lName,
             role_id: job,
@@ -204,11 +200,8 @@ function viewAllEmployees() {
         let employeeArray = res
         console.table(employeeArray)
         initialPrompt()
-
     });
 }
-
-// employee.id, first_name, last_name, FROM employee LEFT JOIN roles ON employee.role_id = roles.id
 
 //View all employees by department 
 function viewAllEmployeesByDepartment() {
@@ -222,6 +215,7 @@ function viewAllEmployeesByDepartment() {
 }
 
 // Delete employees functions 
+
 //Gets the list of employees for deletion 
 function getEmployeesForDelete() {
 
@@ -241,7 +235,6 @@ function getEmployeesForDelete() {
             var employOption = {
                 value: possDelEmployeeArray[i].id,
                 name: fullName
-
             }
 
             //pushing the employee options to the employeesToBeDeleted function 
@@ -267,7 +260,6 @@ function getEmployeesForDelete() {
 function deleteEmployeePrompt(questions) {
     inquirer.prompt(questions)
         .then(function (res) {
-
             var employeeForDeletion = res.deletedEmployee
 
             //calling the deleteEmployee function and passing the Name & Id of the employee we wish to delete 
@@ -275,7 +267,7 @@ function deleteEmployeePrompt(questions) {
         })
 }
 
-
+//Function to delete employee from the database, 
 function deleteEmployee(employeeForDeletion) {
 
     //Query to delete employee of specific id 
@@ -319,7 +311,6 @@ function getRolesForEmployeeRoleUpdate() {
             //Pushing newly created objects to rolesToBeUpdated Array
             rolesToBeUpdated.push(rolesOption)
         }
-
         getEmployeesForRoleUpdate(rolesToBeUpdated)
     })
 }
@@ -391,17 +382,12 @@ function changeRole(newEmployeeRole) {
         roleToBeChangedToo, //3
         employeeToBeUpdated // 13
     ],
-    
-    
      function (err, res) { //need to update 
         console.log("in connection")
         if (err) throw err;
         console.log(res.affectedRows + " employee(s) was updated!\n");
         initialPrompt()
-
-           
     })
-
 }
 
 //View all roles 
@@ -431,7 +417,6 @@ const addRoleQuestionsArray = [
         type: "Input",
         message: "What new role would you like to add ?",
         default: "Financial Analyst"
-
     },
     {
         name: "newRoleSalary",
@@ -642,15 +627,6 @@ function deleteDep(deletedDepartment) {
 
 // End connection function
 function endConnection() {
-    console.log("Goodbye")
+    console.log("Goodbye!")
     connection.end()
 }
-
-//Bonus stuff
-// bonus =[
-// "Update Employee Manager",
-// "View All Employees by Manager",
-// "Remove Employee",
-// "Remove Department",
-// "Remove Role",
-// ]
