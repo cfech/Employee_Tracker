@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS company_db3;
+DROP DATABASE IF EXISTS company_db;
 
-CREATE DATABASE company_db3;
+CREATE DATABASE company_db;
 
-USE company_db3;
+USE company_db;
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT,
@@ -19,8 +19,7 @@ VALUES("Sales");
 INSERT INTO department (name)
 VALUES("Marketing");
 
-INSERT INTO department (name)
-VALUES("undefinded");
+
 
 
 
@@ -34,18 +33,17 @@ CREATE TABLE roles (
 
 
 INSERT INTO roles (title, salary)
-VALUES("Accountant", 55.000);
+VALUES("Accountant", 55000.00);
 
 INSERT INTO roles (title, salary)
-VALUES("Sales Person", 50.000);
+VALUES("Sales Person", 50000.00);
 
 INSERT INTO roles (title, salary)
-VALUES("Marketer", 45.000);
+VALUES("Marketer", 45000.00);
 
 
 INSERT INTO roles (title, salary)
-VALUES("Manager", 90.000);
-
+VALUES("Manager", 90000.00);
 
 
 

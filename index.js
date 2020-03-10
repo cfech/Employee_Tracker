@@ -5,10 +5,10 @@ const inquirer = require("inquirer");
 const cTable = require('console.table');
 require("dotenv").config()
 
-// Font.create('my text', 'Doom', function(rendered){
-//     console.log(rendered)
-// });
-
+//Ascii art 
+Font.create('Employee  Tracker', 'Doom', function(err,rendered){
+    console.log(rendered)
+});
 
 //Connections 
 var connection = mysql.createConnection({
@@ -87,16 +87,15 @@ function getManagersForAssignment() {
 
         //For loop creating an object for inquirer to read 
         for (let i = 0; managersForAssignment.length > i; i++) {
+
+            var fullName = managersForAssignment[i].first_name +" " +managersForAssignment[i].last_name
             var managerOption = {
                 value: managersForAssignment[i].id,
-                name: managersForAssignment[i].first_name
+                name: fullName
             }
             //pushing new object to managerToBeAssigned array
             managerToBeAssigned.push(managerOption)
-
-
         }
-
         //Calling get role for assignment and passing along inquirer choices
         getRoleForAssignment(managerToBeAssigned)
     })
@@ -115,6 +114,7 @@ function getRoleForAssignment(managerToBeAssigned) {
 
         //For loop creating an object for inquirer to read 
         for (let i = 0; possAssignmentArray.length > i; i++) {
+            var fullName = possAssignmentArray[i].first_name +" " +possAssignmentArray[i].last_name
             var option = {
                 value: possAssignmentArray[i].id,
                 name: possAssignmentArray[i].title,
@@ -198,7 +198,7 @@ function addEmployee(newEmployeeInfo) {
 
 // View all employees function 
 function viewAllEmployees() {
-    connection.query("SELECT * FROM employee ", function (err, res) { // have to change join  statement 
+    connection.query("SELECT employee.id, employee.first_name, employee.last_name, roles.title, roles.salary, department.name, e2.first_name AS man_firstName , e2.last_name AS man_lastName  FROM employee Join roles on employee.role_id = roles.id join department on roles.department_id = department.id LEFT JOIN  employee e2 on e2.id = employee.manager_id;", function (err, res) { // have to change join  statement 
         if (err) throw err;
         // Log all results of the SELECT statement
         let employeeArray = res
@@ -212,7 +212,7 @@ function viewAllEmployees() {
 
 //View all employees by department 
 function viewAllEmployeesByDepartment() {
-    connection.query("SELECT employee.id, employee.first_name, employee.last_name FROM employee AND roles.title, roles.salary, roles.department_id FROM roles JOIN ON employee.role_id = roles.id ", function (err, res) { // have to fix join statement 
+    connection.query("SELECT employee.id, employee.first_name, employee.last_name employee,  roles.title, roles.salary, department.name AS department_name FROM employee JOIN roles ON employee.role_id = roles.id join department  on department.id =roles.department_id   ", function (err, res) { // have to fix join statement 
         if (err) throw err;
         // Log all results of the SELECT statement
         let employeeDepartmentsArray = res
@@ -236,10 +236,11 @@ function getEmployeesForDelete() {
 
         //For loop creating and array for inquirer to read
         for (let i = 0; possDelEmployeeArray.length > i; i++) {
+            var fullName = possDelEmployeeArray[i].first_name +" " +possDelEmployeeArray[i].last_name
 
             var employOption = {
                 value: possDelEmployeeArray[i].id,
-                name: possDelEmployeeArray[i].first_name,
+                name: fullName
 
             }
 
@@ -385,19 +386,22 @@ function changeRole(newEmployeeRole) {
     let roleToBeChangedToo = newEmployeeRole.roleChange
 
     //Query to change role for selected employee
-    connection.query("UPDATE employee SET role_id = ? WHERE id = ?", function (err, res) { //need to update 
+    connection.query("UPDATE employee SET role_id = ? WHERE id = ?",
+    [
+        roleToBeChangedToo, //3
+        employeeToBeUpdated // 13
+    ],
+    
+    
+     function (err, res) { //need to update 
         console.log("in connection")
-        [
-            roleToBeChangedToo,
-            employeeToBeUpdated
-        ],
+        if (err) throw err;
+        console.log(res.affectedRows + " employee(s) was updated!\n");
+        initialPrompt()
 
-            function (err, res) {
-                if (err) throw err;
-                console.log(res.affectedRows + " employee(s) was deleted!\n");
-                initialPrompt()
-            }
+           
     })
+
 }
 
 //View all roles 
