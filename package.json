@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/cfech/Employee_Tracker#readme",
   "dependencies": {
+    "ascii-art": "^2.5.0",
+    "canvas": "^2.6.1",
     "console.table": "^0.10.0",
     "dotenv": "^8.2.0",
     "inquirer": "^7.0.6",
