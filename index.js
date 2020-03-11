@@ -21,9 +21,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId);
     initialPrompt()
-
 });
 
 //Initial prompt
@@ -383,7 +381,7 @@ function changeRole(newEmployeeRole) {
         employeeToBeUpdated // 13
     ],
      function (err, res) { //need to update 
-        console.log("in connection")
+
         if (err) throw err;
         console.log(res.affectedRows + " employee(s) was updated!\n");
         initialPrompt()
